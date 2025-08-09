@@ -20,7 +20,7 @@ if (process.env.CLOUD === 'aws') {
 async function startservice() {
     //Import authentication modules here
     // e.g import { authenticateToken } from './auth.js';
-    
+    let { authenticateToken, login, registerUser } = await import('./auth.js');
 
     const app = express();
     const server = createServer(app);
@@ -35,6 +35,14 @@ async function startservice() {
 
     app.get('/api/test', (req, res) => {
         res.json({ "message": "Test endpoint", "status": "true", "test": process.env.TEST || 'NOT_FOUND' });
+    });
+
+    app.post('/api/login', upload.none(), login);
+
+    app.post('/api/register', upload.none(), registerUser);
+
+    app.get('/api/auth', authenticateToken, async (req, res) => {
+        res.status(200).json({ "message": "Authenticated", "user": req.user });
     });
 
     const PORT = process.env.PORT || 4000;
