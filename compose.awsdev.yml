@@ -8,7 +8,7 @@ services:
       - PORT=4000
       - NODE_ENV=development
       - CLOUD=aws
-      - SSM_PARAMETER_PATH=/your/env/path/
+      - SSM_PARAMETER_PATH=/devconzero/env/
     networks:
       - nsvenet
     develop:
