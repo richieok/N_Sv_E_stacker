@@ -1,6 +1,7 @@
 import express from 'express';
 import { createServer } from 'node:http'
 import multer from 'multer'
+import { Server } from 'socket.io';
 import { getParameters } from './aws.js';
 
 if (process.env.CLOUD === 'aws') {
@@ -24,6 +25,9 @@ async function startservice() {
 
     const app = express();
     const server = createServer(app);
+    const io = new Server(server, {
+        path: "/api/socketio/"
+    });
     const upload = multer()
 
     app.use(express.urlencoded({ extended: true }))
@@ -44,6 +48,13 @@ async function startservice() {
     app.get('/api/auth', authenticateToken, async (req, res) => {
         res.status(200).json({ "message": "Authenticated", "user": req.user });
     });
+
+    io.on('connection', (socket) => {
+        console.log('a user connected');
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
+    })
 
     const PORT = process.env.PORT || 4000;
 
