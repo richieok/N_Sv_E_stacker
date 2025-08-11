@@ -54,7 +54,16 @@ async function startservice() {
         socket.on('disconnect', () => {
             console.log('user disconnected');
         });
+        socket.on('private message', (msg)=>{
+            io.emit('private message', {sender: "Server", msg: "echo -> "+msg})
+        })
+        if (process.env.NODE_ENV === "development") {
+          socket.onAny((event, ...args) => {
+            console.log(event, args);
+          });
+        }
     })
+
 
     const PORT = process.env.PORT || 4000;
 

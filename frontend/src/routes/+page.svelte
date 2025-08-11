@@ -1,13 +1,7 @@
 <script>
     import { onMount } from 'svelte';
-    import { io } from 'socket.io-client';
     
-    onMount(()=>{
-        const socket = io({
-            path: '/api/socketio/'
-        })
-    })
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<h1>Home</h1>
+<img src="https://devcon-chatappbucket.s3.us-east-1.amazonaws.com/public/default-profile-pic.svg" alt="Default profile image">
