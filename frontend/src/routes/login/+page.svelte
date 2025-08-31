@@ -3,7 +3,6 @@
     import { goto } from "$app/navigation";
 
     let message;
-    let user = $state({})
 
     // if ( browser && form?.success){
     // 	console.log(form.message)
@@ -20,9 +19,9 @@
             body: formData,
         });
         if (response.ok) {
-            const data = await response.json();
-            console.log("Login successful:", data);
-            message.textContent = data.message
+            const resData = await response.json();
+            console.log("Login successful:", resData);
+            message.textContent = resData.message
             
             window.location.href = "/dashboard"; // Redirect to index.html
         } else {

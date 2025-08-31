@@ -1,7 +1,9 @@
 <script>
-    import { onMount } from 'svelte';
-    
+    import SecureImg from "$lib/components/SecureImg.svelte";
+    let src = "/api/img/folder/public/filename/default-profile-pic.svg"
+    let alt = "Default image"
 </script>
 
 <h1>Home</h1>
-<img src="https://devcon-chatappbucket.s3.us-east-1.amazonaws.com/public/default-profile-pic.svg" alt="Default profile image">
+<SecureImg {src} {alt}/>
+<SecureImg src="/api/img/folder/public/filename/star.svg" alt="yellow star"/>

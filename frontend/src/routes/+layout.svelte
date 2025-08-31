@@ -23,7 +23,7 @@
 	<AuthWidget/>
 </header>
 <main>
-	{@render children?.()}
+	{@render children()}
 </main>
 
 <style>

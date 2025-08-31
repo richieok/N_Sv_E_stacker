@@ -1,8 +1,10 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { createServer } from 'node:http'
 import multer from 'multer'
 import { Server } from 'socket.io';
 import { getParameters } from './aws.js';
+import { signUrl, signUrls } from './chat-app-handlers/signurl.js';
 
 if (process.env.CLOUD === 'aws') {
     getParameters(process.env['SSM_PARAMETER_PATH']).then(() => {
@@ -32,6 +34,7 @@ async function startservice() {
 
     app.use(express.urlencoded({ extended: true }))
     app.use(express.json());
+    app.use(cookieParser());
 
     app.get('/api', (req, res) => {
         res.json({ "message": "/api endpoint", "status": "true" })
@@ -48,6 +51,12 @@ async function startservice() {
     app.get('/api/auth', authenticateToken, async (req, res) => {
         res.status(200).json({ "message": "Authenticated", "user": req.user });
     });
+
+    app.get('/api/img/folder/:folder/filename/:filename', signUrl )
+
+    app.post('/api/signurls/', upload.none(), authenticateToken, signUrls)
+
+    app.get('/api/cookie', (req, res)=> res.send(req.cookies.tokenX))
 
     io.on('connection', (socket) => {
         console.log('a user connected');

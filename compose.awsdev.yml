@@ -10,6 +10,7 @@ services:
       - CLOUD=aws
       # You have to edit the path below
       - SSM_PARAMETER_PATH=/devconzero/env/
+      - AWS_BUCKET=devcon-chatappbucket
     networks:
       - nsvenet
     develop:
